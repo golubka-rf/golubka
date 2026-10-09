@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golubka — Общение, Звонки, Видео, Знакомства, Новости, Маркетплейсы</title>
+    <style>
+      :root { 
+        --primary: #6366f1; /* Фиолетовый оттенок, выглядит современно */
+        --primary-hover: #4f46e5;
+        --dark: #111827;
+        --light: #f3f4f6;
+        --white: #ffffff;
+        --gray: #6b7280;
+      }
+      body { 
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+        margin: 0; 
+        padding: 0; 
+        background-color: var(--light); 
+        color: var(--dark); 
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+      
+      /* --- HEADER (Меню) --- */
+      header { 
+        background: var(--white); 
+        padding: 1rem 2rem; 
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center; 
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1); 
+        position: sticky; 
+        top: 0; 
+        z-index: 1000; 
+      }
+      .logo { 
+        font-weight: 800; 
+        font-size: 1.5rem; 
+        color: var(--primary); 
+        text-decoration: none; 
+        letter-spacing: -1px;
+      }
+      nav a { 
+        margin-left: 20px; 
+        text-decoration: none; 
+        color: var(--dark); 
+        font-weight: 500; 
+        transition: color 0.2s;
+      }
+      nav a:hover { color: var(--primary); }
+
+      /* --- LAYOUT (Сетка: Лента слева, Контент справа) --- */
+      .container { 
+        display: grid; 
+        grid-template-columns: 320px 1fr; 
+        max-width: 1400px; 
+        margin: 0 auto; 
+        width: 100%; 
+        padding: 2rem; 
+        gap: 2rem; 
+        flex: 1;
+      }
+
+      /* Левая колонка (Лента/TikTok style) */
+      .sidebar { 
+        background: var(--white); 
+        padding: 1.5rem; 
+        border-radius: 12px; 
+        border-left: 4px solid var(--primary); 
+        height: fit-content;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      }
+      .sidebar h3 { margin-top: 0; color: var(--primary); border-bottom: 1px solid #eee; padding-bottom: 10px; }
+      .feed-item { border-bottom: 1px solid #eee; padding: 15px 0; }
+      .feed-item:last-child { border-bottom: none; }
+      .feed-item h4 { margin: 0 0 5px 0; font-size: 1.1rem; }
+      .feed-item p { color: var(--gray); font-size: 0.9rem; margin: 0; line-height: 1.4; }
+
+      /* Правая часть (Основной контент) */
+      .main-content h1 { 
+        font-size: 2.8rem; 
+        line-height: 1.1; 
+        margin: 0 0 1.5rem 0; 
+        color: var(--dark);
+        font-weight: 700;
+      }
+      .main-content h1 span { color: var(--primary); } /* Цветное выделение */
+      .main-content p.subtitle { 
+        font-size: 1.25rem; 
+        color: var(--gray); 
+        max-width: 600px; 
+        margin-bottom: 3rem; 
+        line-height: 1.5;
+      }
+
+      /* Сетка карточек */
+      .features-grid { 
+        display: grid; 
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); 
+        gap: 2rem; 
+        margin-bottom: 4rem;
+      }
+      .feature-card { 
+        background: var(--white); 
+        padding: 2rem; 
+        border-radius: 12px; 
+        box-shadow: 0 4px 6px rgba(0,0,0,0.03); 
+        border: 1px solid #eee;
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+      .feature-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
+      .feature-card h3 { margin-top: 0; color: var(--primary); font-size: 1.25rem; }
+      .feature-card p { color: var(--gray); margin: 0; }
+
+      /* Кнопка призыва к действию */
+      .cta-section { 
+        background: var(--dark); 
+        color: var(--white); 
+        padding: 3rem; 
+        border-radius: 12px; 
+        text-align: center; 
+        margin-bottom: 4rem;
+      }
+      .cta-section h2 { margin: 0 0 1rem 0; }
+      .btn-cta { 
+        display: inline-block; 
+        background: var(--primary); 
+        color: var(--white); 
+        padding: 14px 32px; 
+        border-radius: 8px; 
+        text-decoration: none; 
+        font-weight: 600; 
+        font-size: 1.1rem;
+        transition: background 0.2s;
+      }
+      .btn-cta:hover { background: var(--primary-hover); }
+
+      /* --- FOOTER (Маркетплейсы и Мессенджеры) --- */
+      footer { 
+        background: #1f2937; 
+        color: #9ca3af; 
+        padding: 3rem 2rem; 
+        text-align: center; 
+        margin-top: auto;
+      }
+      .footer-title { color: var(--white); font-size: 1.2rem; margin-bottom: 1.5rem; display: block; }
+      .footer-links { 
+        display: flex; 
+        justify-content: center; 
+        flex-wrap: wrap; 
+        gap: 15px; 
+        margin-bottom: 2rem;
+      }
+      .footer-links a { 
+        color: var(--white); 
+        text-decoration: none; 
+        padding: 8px 16px; 
+        background: rgba(255,255,255,0.1); 
+        border-radius: 20px; 
+        font-size: 0.9rem;
+        transition: background 0.2s;
+      }
+      .footer-links a:hover { background: rgba(255,255,255,0.2); }
+      .footer-text { font-size: 0.85rem; }
+
+      /* Адаптив для мобильных */
+      @media (max-width: 768px) {
+        .container { grid-template-columns: 1fr; }
+        .sidebar { display: none; } /* На телефоне ленту скроем для простоты */
+        .main-content h1 { font-size: 2rem; }
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- Меню -->
+    <header>
+      <a href="#" class="logo">GOLUBKA</a>
+      <nav>
+        <a href="#">О проекте</a>
+        <a href="#">Разработчикам</a>
+        <a href="#">Контакты</a>
+      </nav>
+    </header>
+
+    <div class="container">
+      <!-- Левая колонка (Лента) -->
+      <aside class="sidebar">
+        <h3>Лента новостей</h3>
+        <div class="feed-item">
+          <h4>Новый алгоритм подбора пар</h4>
+          <p>Теперь мы учитываем не только интересы, но и геолокацию для быстрых знакомств.</p>
+        </div>
+        <div class="feed-item">
+          <h4>Обновление видеоплеера</h4>
+          <p>Поддержка 4K и улучшенное качество связи для групповых звонков.</p>
+        </div>
+        <div class="feed-item">
+          <h4>Интеграция маркетплейсов</h4>
+          <p>Делись ссылками на товары из Ozon и Wildberries прямо в чате.</p>
+        </div>
+      </aside>
+
+      <!-- Правая часть (Контент) -->
+      <main class="main-content">
+        <h1>Golubka — <span>Общение, Звонки, Видео,<br>Знакомства, Новости, Маркетплейсы</span></h1>
+        <p class="subtitle">Единая платформа для всех твоих цифровых потребностей. Общайся, знакомься, смотри видео и покупай — всё в одном месте.</p>
+
+        <section class="features-grid">
+          <div class="feature-card">
+            <h3>Звонки и Видео</h3>
+            <p>Бесплатные HD-звонки и личные видео-ролики с шифрованием данных. Делись моментами в реальном времени.</p>
+          </div>
+          <div class="feature-card">
+            <h3>Умное знакомство</h3>
+            <p>Регистрация по номеру телефона и подбор собеседников на основе общих интересов и геолокации.</p>
+          </div>
+          <div class="feature-card">
+            <h3>Лента и Контент</h3>
+            <p>Короткие видео, новости и тренды — всё как в популярных соцсетях. Будь в центре событий.</p>
+          </div>
+          <div class="feature-card">
+            <h3>Маркетплейсы</h3>
+            <p>Интеграция с Ozon, Wildberries, Яндекс.Маркет. Делись находками и покупай вместе с друзьями.</p>
+          </div>
+        </section>
+
+        <section class="cta-section">
+          <h2>Готов к новому уровню общения?</h2>
+          <p style="margin-bottom: 1.5rem; color: #d1d5db;">Мы в стадии активной разработки. Присоединяйся к закрытому бета-тестированию.</p>
+          <a href="#" class="btn-cta">Хочу в бета-тест</a>
+        </section>
+      </main>
+    </div>
+
+    <!-- Футер -->
+    <footer>
+      <span class="footer-title">Будь на связи и в курсе всего</span>
+      <div class="footer-links">
+        <a href="#">Telegram</a>
+        <a href="#">WhatsApp</a>
+        <a href="#">VK</a>
+        <a href="#">Max</a>
+        <a href="#">Яндекс</a>
+        <a href="#">Google</a>
+        <a href="#">Ozon</a>
+        <a href="#">Wildberries</a>
+        <a href="#">Яндекс.Маркет</a>
+        <a href="#">AliExpress</a>
+      </div>
+      <p class="footer-text">Golubka © 2024. Все права защищены. Проект находится в разработке.</p>
+    </footer>
+
+  </body>
+</html>
